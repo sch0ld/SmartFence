@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Worx SmartFence</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        <script src="handler.js"></script>
+    </head>
+    <body>
+        <div class="parent">
+            <h1>Smart Lawnmower Robot SmartFence</h1>
+            <div class="gateToggler">
+                <a href="javascript:ToggleGate('0')" class="" id="gate0Toggle" command="close">Close Gate 0</a><br>
+                <span class='status-text'>Current Status: </span><p id="gate0Status">Status</p>
+            </div>
+            <div class="gateToggler">
+                <a href="javascript:ToggleGate('1')" class="" id="gate1Toggle" command="close">Close Gate 1</a><br>
+                <span class='status-text'>Current Status: </span><p id="gate1Status">Status</p>
+            </div>
+            <div class="gateToggler">
+                <a href="javascript:ToggleGate('2')" class="" id="gate2Toggle" command="close">Close Gate 2</a><br>
+                <span class='status-text'>Current Status: </span><p id="gate2Status">Status</p>
+            </div
+        </div>
+        
+    </body>
+    <script>
+
+        var APIOnline = TestConnectionToAPI();
+        if (APIOnline == "404")
+            alert("API Connection not established! Please retry again later")
+
+        gate0 = document.getElementById("gate0Toggle");
+        gate1 = document.getElementById("gate1Toggle");
+        gate2 = document.getElementById("gate2Toggle");
+
+            
+        var gate0Status = SendCommandToServer(0, status) // Sends command to the API
+        var gate1Status = SendCommandToServer(1, status) // Sends command to the API
+        var gate2Status = SendCommandToServer(2, status) // Sends command to the API
+
+        
+        document.getElementById('gate0Status').innerText = "" + gate0Status.toUpperCase();
+        document.getElementById('gate1Status').innerText = gate1Status.toUpperCase();
+        document.getElementById('gate2Status').innerText = gate2Status.toUpperCase();
+        if (gate0Status == "closed") {
+            gate0.style.backgroundcolor = "black"; 
+            gate0.setAttribute("command", "open");
+            gate0.innerText = "Open Gate 0";
+            
+        }
+        if (gate1Status == "closed") {
+            gate1.style.backgroundcolor = "black"; 
+            gate1.setAttribute("command", "open");
+            gate1.innerText = "Open Gate 1";
+        }
+        if (gate2Status == "closed") {
+            gate2.style.backgroundcolor = "black"; 
+            gate2.setAttribute("command", "open");
+            gate2.innerText = "Open Gate 2";
+        }
+        
+
+
+    </script>
+    <script>
+
+        gate0 = document.getElementById("gate0Toggle");
+        gate1 = document.getElementById("gate1Toggle");
+        gate2 = document.getElementById("gate2Toggle");
+        
+       
+        function ToggleGate(gateNumber) {
+            if (gateNumber == 0) {
+                //Gets the command attribute from the element to send to the API
+                command = gate0.getAttribute("command");
+                
+                //Gets the status of the controlled gate (0)
+                var gate0Status = SendCommandToServer(gateNumber, command) // Sends command to the API
+
+                // Updates the command depending on the current action(command)
+                if (command == "close")
+                    //Sets the command attribute from "close" to "open"
+                    gate0.setAttribute("command", "open");
+                else {
+                    //Sets the command attribute from "open" to "close"
+                    gate0.setAttribute("command", "close");
+                }
+                //Changes the UI to the new action/command depending on current action/command
+                if (gate0Status == "closed")
+                    gate0.innerText = "Open Gate " + gateNumber;
+                else {
+                    gate0.innerText = "Close Gate " + gateNumber;
+                }    
+            }
+            if (gateNumber == 1) {
+                //Gets the command attribute from the element to send to the API
+                command = gate1.getAttribute("command");
+                
+                //Gets the status of the controlled gate (1)
+                var gate1Status = SendCommandToServer(gateNumber, command) // Sends command to the API
+            
+                // Updates the command depending on the current action(command)
+                if (command == "close")
+                    //Sets the command attribute from "close" to "open"
+                    gate1.setAttribute("command", "open");
+                else {
+                    //Sets the command attribute from "open" to "close"
+                    gate1.setAttribute("command", "close");
+                }
+                //Changes the UI to the new action/command depending on current action/command
+                if (gate1Status == "closed")
+                    gate1.innerText = "Open Gate " + gateNumber;
+                else {
+                    gate1.innerText = "Close Gate " + gateNumber;
+                }    
+            }
+            if (gateNumber == 2) {
+                //Gets the command attribute from the element to send to the API
+                command = gate2.getAttribute("command");
+                
+                //Gets the status of the controlled gate (2)
+                var gate2Status = SendCommandToServer(gateNumber, command) // Sends command to the API
+            
+                // Updates the command depending on the current action(command)
+                if (command == "close")
+                    //Sets the command attribute from "close" to "open"
+                    gate2.setAttribute("command", "open");
+                else {
+                    //Sets the command attribute from "open" to "close"
+                    gate2.setAttribute("command", "close");
+                }
+                //Changes the UI to the new action/command depending on current action/command
+                if (gate2Status == "closed")
+                    gate2.innerText = "Open Gate " + gateNumber;
+                else {
+                    gate2.innerText = "Close Gate " + gateNumber;
+                }    
+            }
+
+
+             
+            location.reload();
+        }
+
+        
+    </script>
+</html>
+
